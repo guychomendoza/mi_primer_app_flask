@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:TU_CONTRASEÑA@localhost/mi_flask_app'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Xanandra131313@localhost/mi_flask_app'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -22,6 +22,10 @@ with app.app_context():
     db.create_all()
 
 # Rutas
+@app.route('/')
+def inicio():
+    return '¡Bienvenido a tu app Flask con PostgreSQL!'
+
 @app.route('/add_user/<nombre>/<email>')
 def add_user(nombre, email):
     usuario = Usuario(nombre=nombre, email=email)
@@ -34,6 +38,6 @@ def usuarios():
     usuarios = Usuario.query.all()
     return '<br>'.join([f'{u.id} - {u.nombre} - {u.email}' for u in usuarios])
 
-# Iniciar app
+# Ejecutar servidor
 if __name__ == '__main__':
     app.run(debug=True)
